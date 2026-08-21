@@ -6,7 +6,6 @@ app.use(express.json());
 const PORTA = 3105; 
 
 const adminRouter = require('./admin/admin-routes');
-const helloworldRouter = require('./hello-world/helloworld-routes');
 
 app.listen(PORTA, () => {
     console.log('Servidor rodando no endereço http://localhost:' + PORTA);
