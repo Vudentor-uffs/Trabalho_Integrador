@@ -1,0 +1,15 @@
+{
+  "name": "Trabalho_Integrador",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Vudentor-uffs/Trabalho_Integrador.git",
+  "author": "Vittor Hugo Reolon e Brenda Vivan Pastre",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
