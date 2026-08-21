@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    res.status(200).json({mensagem: "Hello world."}); 
+    res.status(200).json({mensagem: "Pessoa."}); 
 })
 
 module.exports = router;
