@@ -1,44 +1,44 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../connection");
 
-	const UsuarioPermissao = sequelize.define(
-		"UsuarioPermissao",
-		{
-			email: {
-				type: DataTypes.STRING,
-				primaryKey: true,
-				references: {
-					model: "usuario",
-					key: "email",
-				},
-			},
-			id_permissao: {
-				type: DataTypes.BIGINT,
-				primaryKey: true,
-				references: {
-					model: "permissoes",
-					key: "id",
-				},
+const UsuarioPermissao = sequelize.define(
+	"UsuarioPermissao",
+	{
+		email: {
+			type: DataTypes.STRING,
+			primaryKey: true,
+			references: {
+				model: "usuario",
+				key: "email",
 			},
 		},
-		{
-			tableName: "usuario_permissao",
-			schema: "public",
-			freezeTableName: true,
-			timestamps: false,
+		id_permissao: {
+			type: DataTypes.BIGINT,
+			primaryKey: true,
+			references: {
+				model: "permissoes",
+				key: "id",
+			},
 		},
-	);
+	},
+	{
+		tableName: "usuario_permissao",
+		schema: "public",
+		freezeTableName: true,
+		timestamps: false,
+	},
+);
 
-	UsuarioPermissao.associate = function (models) {
-		UsuarioPermissao.belongsTo(models.Usuario, {
-			foreignKey: "email",
-			targetKey: "email",
-		});
-		UsuarioPermissao.belongsTo(models.Permissao, {
-			foreignKey: "id_permissao",
-			targetKey: "id",
-			as: "Permissao",
-		});
-	};
+UsuarioPermissao.associate = function (models) {
+	UsuarioPermissao.belongsTo(models.Usuario, {
+		foreignKey: "email",
+		targetKey: "email",
+	});
+	UsuarioPermissao.belongsTo(models.Permissao, {
+		foreignKey: "id_permissao",
+		targetKey: "id",
+		as: "Permissao",
+	});
+};
 
 module.exports = UsuarioPermissao;

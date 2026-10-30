@@ -1,20 +1,20 @@
-
-const express = require('express');
+const express = require("express");
+const empresaRoutes = require("./src/empresa/empresa.routes");
+const clienteRoutes = require("./src/cliente/cliente.routes");
+const contratoRoutes = require("./src/contrato/contrato.routes");
+const authRoutes = require("./src/auth/auth.routes");
 
 const app = express();
-app.use(express.json()); 
+const PORT = 3000;
 
-const PORTA = 3105; 
+app.use(express.json());
+app.use(empresaRoutes);
+app.use(clienteRoutes);
+app.use(contratoRoutes);
+app.use(authRoutes);
 
-const adminRouter = require('./admin/admin-routes');
-
-const pessoaRouter = require('./pessoa/pessoa-routes');
-
-app.listen(PORTA, () => {
-    console.log('Servidor rodando no endereço http://localhost:' + PORTA);
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
-app.use('/api/admin', adminRouter);
-
-app.use('/api/pessoa', pessoaRouter);
 
