@@ -1,15 +1,15 @@
-const empresaAdmRepository = require("./empresa.repository");
+const empresaRepository = require("./empresa.repository");
 
 async function listar() {
-    return empresaAdmRepository.listar();
+    return empresaRepository.listar();
 }
 
 async function buscarPorId(id) {
-    return empresaAdmRepository.buscarPorId(id);
+    return empresaRepository.buscarPorId(id);
 }
 
 async function atualizar(id, dados) {
-    return empresaAdmRepository.atualizar(id, dados);
+    return empresaRepository.atualizar(id, dados);
 }
 
 module.exports = {

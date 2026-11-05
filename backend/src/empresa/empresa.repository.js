@@ -1,17 +1,17 @@
-const { EmpresaAdm } = require("../database/models");
+const { Empresa } = require("../database/models");
 
 async function listar() {
-    return EmpresaAdm.findAll({ order: [["nome", "ASC"]] });
+    return Empresa.findAll({ order: [["nome", "ASC"]] });
 }
 
 async function buscarPorId(id) {
-    return EmpresaAdm.findByPk(id);
+    return Empresa.findByPk(id);
 }
 
 async function atualizar(id, dados) {
-    const empresaAdm = await EmpresaAdm.findByPk(id);
-    if (!empresaAdm) return null;
-    return empresaAdm.update(dados);
+    const empresa = await Empresa.findByPk(id);
+    if (!empresa) return null;
+    return empresa.update(dados);
 }
 
 module.exports = {

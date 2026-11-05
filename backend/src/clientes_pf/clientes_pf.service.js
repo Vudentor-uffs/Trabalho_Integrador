@@ -1,23 +1,23 @@
-const clienteRepository = require("./cliente.repository");
+const clientes_pfRepository = require("./clientes_pf.repository");
 
 async function listar() {
-    return clienteRepository.listar();
+    return clientes_pfRepository.listar();
 }
 
 async function buscarPorId(id) {
-    return clienteRepository.buscarPorId(id);
+    return clientes_pfRepository.buscarPorId(id);
 }
 
 async function criar(dados) {
-    return clienteRepository.criar(dados);
+    return clientes_pfRepository.criar(dados);
 }
 
 async function atualizar(id, dados) {
-    return clienteRepository.atualizar(id, dados);
+    return clientes_pfRepository.atualizar(id, dados);
 }
 
 async function deletar(id) {
-    return clienteRepository.deletar(id);
+    return clientes_pfRepository.deletar(id);
 }
 
 module.exports = {

@@ -1,23 +1,23 @@
-const contratoRepository = require("./contrato.repository");
+const contratosRepository = require("./contratos.repository");
 
 async function listar() {
-    return contratoRepository.listar();
+    return contratosRepository.listar();
 }
 
 async function buscarPorId(id) {
-    return contratoRepository.buscarPorId(id);
+    return contratosRepository.buscarPorId(id);
 }
 
 async function criar(dados) {
-    return contratoRepository.criar(dados);
+    return contratosRepository.criar(dados);
 }
 
 async function atualizar(id, dados) {
-    return contratoRepository.atualizar(id, dados);
+    return contratosRepository.atualizar(id, dados);
 }
 
 async function deletar(id) {
-    return contratoRepository.deletar(id);
+    return contratosRepository.deletar(id);
 }
 
 module.exports = {

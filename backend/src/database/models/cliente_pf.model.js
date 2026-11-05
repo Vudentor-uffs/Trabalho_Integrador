@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../connection");
 
-const Cliente = sequelize.define(
-    "Cliente",
+const ClientePf = sequelize.define(
+    "ClientePf",
     {
        
     },
@@ -11,8 +11,8 @@ const Cliente = sequelize.define(
     },
 );
 
-Cliente.associate = (models) => {
+ClientePf.associate = (models) => {
     
 };
 
-module.exports = Cliente;
+module.exports = ClientePf;

@@ -1,21 +1,21 @@
 const express = require("express");
-const contratoController = require("./contrato.controller");
+const contratosController = require("./contratos.controller");
 
 const router = express.Router();
 
-// GET /contrato
-router.get("/contrato", contratoController.listar);
+// GET /contratos
+router.get("/contratos", contratosController.listar);
 
-// GET /contrato/:id
-router.get("/contrato/:id", contratoController.buscarPorId);
+// GET /contratos/:id
+router.get("/contratos/:id", contratosController.buscarPorId);
 
-// POST /contrato
-router.post("/contrato", contratoController.criar);
+// POST /contratos
+router.post("/contratos", contratosController.criar);
 
-// PUT /contrato/:id
-router.put("/contrato/:id", contratoController.atualizar);
+// PUT /contratos/:id
+router.put("/contratos/:id", contratosController.atualizar);
 
-// DELETE /contrato/:id
-router.delete("/contrato/:id", contratoController.deletar);
+// DELETE /contratos/:id
+router.delete("/contratos/:id", contratosController.deletar);
 
 module.exports = router;

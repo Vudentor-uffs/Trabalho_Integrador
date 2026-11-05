@@ -1,21 +1,21 @@
 const express = require("express");
-const clienteController = require("./cliente.controller");
+const clientes_pfController = require("./clientes_pf.controller");
 
 const router = express.Router();
 
-// GET /cliente
-router.get("/cliente", clienteController.listar);
+// GET /clientes_pf
+router.get("/clientes_pf", clientes_pfController.listar);
 
-// GET /cliente/:id
-router.get("/cliente/:id", clienteController.buscarPorId);
+// GET /clientes_pf/:id
+router.get("/clientes_pf/:id", clientes_pfController.buscarPorId);
 
-// POST /cliente
-router.post("/cliente", clienteController.criar);
+// POST /clientes_pf
+router.post("/clientes_pf", clientes_pfController.criar);
 
-// PUT /cliente/:id
-router.put("/cliente/:id", clienteController.atualizar);
+// PUT /clientes_pf/:id
+router.put("/clientes_pf/:id", clientes_pfController.atualizar);
 
-// DELETE /cliente/:id
-router.delete("/cliente/:id", clienteController.deletar);
+// DELETE /clientes_pf/:id
+router.delete("/clientes_pf/:id", clientes_pfController.deletar);
 
 module.exports = router;

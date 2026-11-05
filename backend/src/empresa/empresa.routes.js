@@ -1,15 +1,15 @@
 const express = require("express");
-const empresaAdmController = require("./empresa.controller");
+const empresaController = require("./empresa.controller");
 
 const router = express.Router();
 
-// GET /empresa_adm
-router.get("/empresa_adm", empresaAdmController.listar);
+// GET /empresa
+router.get("/empresa", empresaController.listar);
 
-// GET /empresa_adm/:id
-router.get("/empresa_adm/:id", empresaAdmController.buscarPorId);
+// GET /empresa/:id
+router.get("/empresa/:id", empresaController.buscarPorId);
 
-// PUT /empresa_adm/:id
-router.put("/empresa_adm/:id", empresaAdmController.atualizar);
+// PUT /empresa/:id
+router.put("/empresa/:id", empresaController.atualizar);
 
 module.exports = router;

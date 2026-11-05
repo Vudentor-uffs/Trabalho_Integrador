@@ -1,8 +1,8 @@
-const contratoService = require("./contrato.service");
+const contratosService = require("./contratos.service");
 
 async function listar(req, res) {
     try {
-        const contratos = await contratoService.listar();
+        const contratos = await contratosService.listar();
         return res.status(200).json(contratos);
     } catch (erro) {
         console.log("Erro ao buscar contratos:", erro);
@@ -12,7 +12,7 @@ async function listar(req, res) {
 
 async function buscarPorId(req, res) {
     try {
-        const contrato = await contratoService.buscarPorId(req.params.id);
+        const contrato = await contratosService.buscarPorId(req.params.id);
         return res.status(200).json(contrato);
     } catch (erro) {
         console.log("Erro ao buscar contrato:", erro);
@@ -22,7 +22,7 @@ async function buscarPorId(req, res) {
 
 async function criar(req, res) {
     try {
-        const contrato = await contratoService.criar(req.body);
+        const contrato = await contratosService.criar(req.body);
         return res.status(201).json(contrato);
     } catch (erro) {
         console.log("Erro ao criar contrato:", erro);
@@ -32,7 +32,7 @@ async function criar(req, res) {
 
 async function atualizar(req, res) {
     try {
-        const contrato = await contratoService.atualizar(req.params.id, req.body);
+        const contrato = await contratosService.atualizar(req.params.id, req.body);
         if (!contrato) return res.status(404).json({ erro: "Contrato não encontrado" });
         return res.status(200).json(contrato);
     } catch (erro) {
@@ -43,7 +43,7 @@ async function atualizar(req, res) {
 
 async function deletar(req, res) {
     try {
-        const contrato = await contratoService.deletar(req.params.id);
+        const contrato = await contratosService.deletar(req.params.id);
         if (!contrato) return res.status(404).json({ erro: "Contrato não encontrado" });
         return res.status(204).send();
     } catch (erro) {
