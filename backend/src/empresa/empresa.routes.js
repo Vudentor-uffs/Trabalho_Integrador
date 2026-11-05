@@ -1,21 +1,15 @@
 const express = require("express");
-const empresaController = require("./empresa.controller");
+const empresaAdmController = require("./empresa.controller");
 
 const router = express.Router();
 
-// GET /empresa
-router.get("/empresa", empresaController.listar);
+// GET /empresa_adm
+router.get("/empresa_adm", empresaAdmController.listar);
 
-// GET /empresa/:id
-router.get("/empresa/:id", empresaController.buscarPorId);
+// GET /empresa_adm/:id
+router.get("/empresa_adm/:id", empresaAdmController.buscarPorId);
 
-// POST /empresa
-router.post("/empresa", empresaController.criar);
-
-// PUT /empresa/:id
-router.put("/empresa/:id", empresaController.atualizar);
-
-// DELETE /empresa/:id
-router.delete("/empresa/:id", empresaController.deletar);
+// PUT /empresa_adm/:id
+router.put("/empresa_adm/:id", empresaAdmController.atualizar);
 
 module.exports = router;
