@@ -1,19 +1,21 @@
 -- DROP TABLE IF EXISTS usuario_permissao;
 -- DROP TABLE IF EXISTS permissao;
 -- DROP TABLE IF EXISTS usuario;
--- DROP TABLE IF EXISTS emprestimos;
--- DROP TABLE IF EXISTS livros;
--- DROP TABLE IF EXISTS leitores;
--- DROP TABLE IF EXISTS autores;
--- DROP TYPE  IF EXISTS enum_livros_categoria;
+-- DROP TABLE IF EXISTS empresa;
+-- DROP TABLE IF EXISTS cliente_pj;
+-- DROP TABLE IF EXISTS cliente_pf;
+-- DROP TABLE IF EXISTS contratos;
+-- DROP TABLE  IF EXISTS cliente_colaborador;
+-- DROP TYPE  IF EXISTS tipo_cliente;
+
 
 CREATE TYPE tipo_cliente AS ENUM ('Normal', 'Colaborador');
 
 
-CREATE TABLE empresa_adm (
+CREATE TABLE empresa (
     cnpj            VARCHAR(14) PRIMARY KEY DEFAULT '52693615000144',
     nome            VARCHAR(100) UNIQUE DEFAULT 'Vanessa Reolon Consultoria & Desenvolvimento Ldta.',
-    endereco        VARCHAR(150) DEFAULT 'Rua Santo Antonio, 740, Chapecó-SC'
+    endereco        VARCHAR(150) DEFAULT 'Rua Santo Antonio, 740, Chapecó-SC',
     email           VARCHAR(255) DEFAULT 'vanessareolon.vr@gmail.com',
     telefone        VARCHAR(20) DEFAULT '4999180473',
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -21,7 +23,7 @@ CREATE TABLE empresa_adm (
 );
 
 
-CREATE TABLE empresa ( -- clinte PJ
+CREATE TABLE clientes_pj ( 
     id              SERIAL PRIMARY KEY,
     cnpj            VARCHAR(14) UNIQUE NOT NULL,
     nome            VARCHAR(100) NOT NULL,
@@ -33,9 +35,9 @@ CREATE TABLE empresa ( -- clinte PJ
 );
 
 
-CREATE TABLE cliente (
+CREATE TABLE clientes_pf (
     id              SERIAL PRIMARY KEY,
-    cpf             VARCHAR(11), UNIQUE NOT NULL,
+    cpf             VARCHAR(11) UNIQUE NOT NULL,
     nome            VARCHAR(100) NOT NULL,
     email           VARCHAR(255) NOT NULL,
     tipo            tipo_cliente NOT NULL DEFAULT 'Normal',
@@ -46,26 +48,26 @@ CREATE TABLE cliente (
 );
 
 CREATE TABLE cliente_colaborador (
-    empresa_id  INTEGER NOT NULL REFERENCES empresa(id) ON DELETE CASCADE,
-    cliente_id  INTEGER NOT NULL REFERENCES cliente(id) ON DELETE CASCADE,
+    cliente_pj_id  INTEGER NOT NULL REFERENCES clientes_pj(id) ON DELETE CASCADE,
+    cliente_pf_id  INTEGER NOT NULL REFERENCES clientes_pf(id) ON DELETE CASCADE,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (empresa_id, cliente_id)
+    PRIMARY KEY (cliente_pj_id, cliente_pf_id)
 );
 
 
-CREATE TABLE contrato (
+CREATE TABLE contratos (
     id               SERIAL PRIMARY KEY,
-    empresa_adm      INTEGER NOT NULL REFERENCES empresa_adm(cnpj) ON DELETE RESTRICT,
-    cliente_pf_id       INTEGER NOT NULL REFERENCES cliente(id)   ON DELETE RESTRICT,
-    cliente_pj_id       INTEGER NOT NULL REFERENCES empresa(id)   ON DELETE RESTRICT,
+    empresa          VARCHAR(14) NOT NULL REFERENCES empresa(cnpj) ON DELETE RESTRICT,
+    cliente_pf_id    INTEGER REFERENCES clientes_pf(id)   ON DELETE RESTRICT,
+    cliente_pj_id    INTEGER REFERENCES clientes_pj(id)   ON DELETE RESTRICT,
     data_inicio      DATE NOT NULL,
     data_fim         DATE NOT NULL,
     validade         INTEGER NOT NULL,
-    valor            NUMERIC(5,2) NOT NULL,
-    multa            NUMERIC(5,2) NOT NULL,
+    valor            NUMERIC(10,2) NOT NULL,
+    multa            NUMERIC(10,2) NOT NULL,
     proposta         TEXT NOT NULL,
     created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
     CONSTRAINT chk_tipo_cliente_contrato CHECK (
         (cliente_pf_id IS NOT NULL AND cliente_pj_id IS NULL) OR
@@ -97,28 +99,26 @@ CREATE INDEX idx_usuario_permissao_email ON usuario_permissao (email);
 CREATE INDEX idx_usuario_permissao_id_permissao ON usuario_permissao (id_permissao);
 
 
--- Inserindo empresas (Clientes PJ)
-INSERT INTO empresa (cnpj, nome, email, telefone, endereco) 
+INSERT INTO clientes_pj (cnpj, nome, email, telefone, endereco) 
 VALUES 
     ('11222333000155', 'Tech Solutions LTDA', 'contato@techsolutions.com', '4933221100', 'Rua Fernando Machado, 500'),
     ('44555666000188', 'Supermercado Chapecó SA', 'financeiro@superchapeco.com.br', '4933554411', 'Av. São Pedro, 1200');
 
--- Inserindo Clientes Pessoas Físicas
-INSERT INTO cliente (cpf, nome, email, tipo, telefone, data_nascimento) 
+INSERT INTO clientes_pf (cpf, nome, email, tipo, telefone, data_nascimento) 
 VALUES 
     ('12345678901', 'João da Silva', 'joao.silva@email.com', 'Normal', '49991112222', '1990-05-15'),
     ('98765432100', 'Maria Oliveira', 'maria.oliveira@email.com', 'Colaborador', '49998887777', '1995-08-20'),
     ('55544433322', 'Carlos Eduardo', 'carlos.eduardo@email.com', 'Colaborador', '49997776666', '1988-12-01');
 
-INSERT INTO empresa_colaborador (empresa_id, cliente_id, cargo) 
+INSERT INTO cliente_colaborador (cliente_pj_id, cliente_pf_id) 
 VALUES 
     (1, 2),  -- Maria (id 2) na Tech Solutions (id 1)
     (1, 3);  -- Carlos (id 3) na Tech Solutions (id 1)
 
 
-INSERT INTO contrato (empresa_adm, cliente_pf_id, cliente_pj_id, data_inicio, data_fim, validade, valor, multa, proposta)
+INSERT INTO contratos (empresa, cliente_pf_id, cliente_pj_id, data_inicio, data_fim, validade, valor, multa, proposta)
 VALUES (
-    '12345678000100', 
+    '52693615000144', 
     1,                  -- João da Silva (PF)
     NULL,               -- PJ precisa ser NULL
     '2026-01-01', 
@@ -127,7 +127,7 @@ VALUES (
     250.00, 
     50.00, 
     'Proposta de consultoria individual para pessoa física.'
-), ('12345678000100', 
+), ('52693615000144', 
     NULL,               -- PF precisa ser NULL
     1,                  -- Tech Solutions LTDA (PJ)
     '2026-02-01', 
