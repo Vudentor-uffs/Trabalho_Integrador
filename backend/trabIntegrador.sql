@@ -5,7 +5,6 @@
 -- DROP TABLE IF EXISTS cliente_pj;
 -- DROP TABLE IF EXISTS cliente_pf;
 -- DROP TABLE IF EXISTS contratos;
--- DROP TABLE  IF EXISTS cliente_colaborador;
 -- DROP TYPE  IF EXISTS tipo_cliente;
 
 
@@ -43,17 +42,15 @@ CREATE TABLE clientes_pf (
     tipo            tipo_cliente NOT NULL DEFAULT 'Normal',
     telefone        VARCHAR(20),
     data_nascimento DATE NOT NULL,
+    cliente_pj_id   INTEGER REFERENCES clientes_pj(id) ON DELETE SET NULL,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
 
-CREATE TABLE cliente_colaborador (
-    cliente_pj_id  INTEGER NOT NULL REFERENCES clientes_pj(id) ON DELETE CASCADE,
-    cliente_pf_id  INTEGER NOT NULL REFERENCES clientes_pf(id) ON DELETE CASCADE,
-    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (cliente_pj_id, cliente_pf_id)
+    CONSTRAINT chk_tipo_colaborador_pj CHECK (
+        (tipo = 'Colaborador' AND cliente_pj_id IS NOT NULL) OR
+        (tipo = 'Normal' AND cliente_pj_id IS NULL)
+    )
 );
-
 
 CREATE TABLE contratos (
     id               SERIAL PRIMARY KEY,
@@ -106,14 +103,9 @@ VALUES
 
 INSERT INTO clientes_pf (cpf, nome, email, tipo, telefone, data_nascimento) 
 VALUES 
-    ('12345678901', 'João da Silva', 'joao.silva@email.com', 'Normal', '49991112222', '1990-05-15'),
-    ('98765432100', 'Maria Oliveira', 'maria.oliveira@email.com', 'Colaborador', '49998887777', '1995-08-20'),
-    ('55544433322', 'Carlos Eduardo', 'carlos.eduardo@email.com', 'Colaborador', '49997776666', '1988-12-01');
-
-INSERT INTO cliente_colaborador (cliente_pj_id, cliente_pf_id) 
-VALUES 
-    (1, 2),  -- Maria (id 2) na Tech Solutions (id 1)
-    (1, 3);  -- Carlos (id 3) na Tech Solutions (id 1)
+    ('12345678901', 'João da Silva', 'joao.silva@email.com', 'Normal', '49991112222', '1990-05-15', NULL),
+    ('98765432100', 'Maria Oliveira', 'maria.oliveira@email.com', 'Colaborador', '49998887777', '1995-08-20', 1),
+    ('55544433322', 'Carlos Eduardo', 'carlos.eduardo@email.com', 'Colaborador', '49997776666', '1988-12-01', 1);
 
 
 INSERT INTO contratos (empresa, cliente_pf_id, cliente_pj_id, data_inicio, data_fim, validade, valor, multa, proposta)
