@@ -14,7 +14,7 @@ const ClientePf = sequelize.define(
         clientePjId: { type: DataTypes.INTEGER, field: "cliente_pj_id" }
     },
     { 
-        timestamps: true, tableName: "clientes_pf" 
+        timestamps: false, tableName: "clientes_pf" 
     },
 );
 

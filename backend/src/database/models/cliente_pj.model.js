@@ -12,7 +12,7 @@ const ClientePj = sequelize.define(
         endereco: {type: DataTypes.STRING(150), field: "endereco"},
     },
     { 
-        timestamps: true, tableName: "clientes_pj" 
+        timestamps: false, tableName: "clientes_pj" 
     },
 );
 

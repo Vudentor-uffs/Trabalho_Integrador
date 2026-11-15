@@ -16,7 +16,7 @@ const Contrato = sequelize.define(
         validade: { type: DataTypes.INTEGER, allowNull: false, field: "validade" }
     },
     { 
-        timestamps: true, tableName: "contratos", 
+        timestamps: false, tableName: "contratos", 
         validate: {
             tipoCliente() {
                 const temPf = this.clientePfId !== null && this.clientePfId !== undefined;

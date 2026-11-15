@@ -1,19 +1,14 @@
 const empresaRepository = require("./empresa.repository");
 
-async function listar() {
-    return empresaRepository.listar();
+async function buscar() {
+    return empresaRepository.buscar();
 }
 
-async function buscarPorId(id) {
-    return empresaRepository.buscarPorId(id);
-}
-
-async function atualizar(id, dados) {
-    return empresaRepository.atualizar(id, dados);
+async function atualizar(dados) {
+    return empresaRepository.atualizar(dados);
 }
 
 module.exports = {
-    listar,
-    buscarPorId,
+    buscar,
     atualizar,
 };

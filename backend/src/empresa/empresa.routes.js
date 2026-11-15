@@ -4,12 +4,9 @@ const empresaController = require("./empresa.controller");
 const router = express.Router();
 
 // GET /empresa
-router.get("/empresa", empresaController.listar);
+router.get("/empresa", empresaController.buscar);
 
-// GET /empresa/:id
-router.get("/empresa/:id", empresaController.buscarPorId);
-
-// PUT /empresa/:id
-router.put("/empresa/:id", empresaController.atualizar);
+// PUT /empresa
+router.put("/empresa", empresaController.atualizar);
 
 module.exports = router;

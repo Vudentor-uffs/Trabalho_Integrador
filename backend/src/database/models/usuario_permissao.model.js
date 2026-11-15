@@ -23,8 +23,6 @@ const UsuarioPermissao = sequelize.define(
 	},
 	{
 		tableName: "usuario_permissao",
-		schema: "public",
-		freezeTableName: true,
 		timestamps: false,
 	},
 );

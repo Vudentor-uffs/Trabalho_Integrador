@@ -12,7 +12,7 @@ const Empresa = sequelize.define(
         
     },
     { 
-        timestamps: true, tableName: "empresa" 
+        timestamps: false, tableName: "empresa" 
     },
 );
 
