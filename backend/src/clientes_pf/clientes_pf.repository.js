@@ -1,7 +1,7 @@
 const { ClientePf } = require("../database/models");
 
 async function listar() {
-    return ClientePf.findAll({ order: [["nome", "ASC"]] });
+    return ClientePf.findAll({ order: [["id", "ASC"]] });
 }
 
 async function buscarPorId(id) {
