@@ -1,5 +1,6 @@
 const express = require("express");
 const empresaController = require("./empresa.controller");
+const { requireJWTAuth, requirePermissao } = require("../auth/auth.config");
 
 const router = express.Router();
 
@@ -7,6 +8,6 @@ const router = express.Router();
 router.get("/empresa", empresaController.buscar);
 
 // PUT /empresa
-router.put("/empresa", empresaController.atualizar);
+router.put("/empresa", requireJWTAuth, requirePermissao("EDITAR_EMPRESA_ADM"), empresaController.atualizar);
 
 module.exports = router;

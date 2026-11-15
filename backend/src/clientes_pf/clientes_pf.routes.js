@@ -1,5 +1,6 @@
 const express = require("express");
 const clientes_pfController = require("./clientes_pf.controller");
+const { requireJWTAuth, requirePermissao } = require("../auth/auth.config");
 
 const router = express.Router();
 
@@ -10,12 +11,12 @@ router.get("/clientes_pf", clientes_pfController.listar);
 router.get("/clientes_pf/:id", clientes_pfController.buscarPorId);
 
 // POST /clientes_pf
-router.post("/clientes_pf", clientes_pfController.criar);
+router.post("/clientes_pf", requireJWTAuth, requirePermissao("CRIAR_CLIENTE_PF"), clientes_pfController.criar);
 
 // PUT /clientes_pf/:id
-router.put("/clientes_pf/:id", clientes_pfController.atualizar);
+router.put("/clientes_pf/:id", requireJWTAuth, requirePermissao("EDITAR_CLIENTE_PF"), clientes_pfController.atualizar);
 
 // DELETE /clientes_pf/:id
-router.delete("/clientes_pf/:id", clientes_pfController.deletar);
+router.delete("/clientes_pf/:id", requireJWTAuth, requirePermissao("DELETAR_CLIENTE_PF"), clientes_pfController.deletar);
 
 module.exports = router;

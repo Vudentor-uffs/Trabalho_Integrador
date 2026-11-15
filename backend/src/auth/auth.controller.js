@@ -45,7 +45,7 @@ async function logout(req, res) {
 async function criarUsuario(req, res) {
     try {
 
-        const novoUsuario = authService.criarNovoUsuario(req.body);
+        const novoUsuario = await authService.criarNovoUsuario(req.body);
 
         console.log("Usuário inserido");
         

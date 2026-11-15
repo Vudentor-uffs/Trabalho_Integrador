@@ -135,12 +135,12 @@ VALUES (
 
 -- Inserir permissões
 INSERT INTO permissao (descricao) VALUES
-    ('CRIAR_CLIENTE'),
-    ('EDITAR_CLIENTE'),
-    ('DELETAR_CLIENTE'),
-    ('CRIAR_EMPRESA'),
-    ('EDITAR_EMPRESA'),
-    ('DELETAR_EMPRESA'),
+    ('CRIAR_CLIENTE_PF'),
+    ('EDITAR_CLIENTE_PF'),
+    ('DELETAR_CLIENTE_PF'),
+    ('CRIAR_CLIENTE_PJ'),
+    ('EDITAR_CLIENTE_PJ'),
+    ('DELETAR_CLIENTE_PJ'),
     ('CRIAR_CONTRATO'),
     ('EDITAR_CONTRATO'),
     ('DELETAR_CONTRATO'),

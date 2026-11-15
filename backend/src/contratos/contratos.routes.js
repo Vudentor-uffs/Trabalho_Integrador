@@ -1,5 +1,6 @@
 const express = require("express");
 const contratosController = require("./contratos.controller");
+const { requireJWTAuth, requirePermissao } = require("../auth/auth.config");
 
 const router = express.Router();
 
@@ -10,12 +11,12 @@ router.get("/contratos", contratosController.listar);
 router.get("/contratos/:id", contratosController.buscarPorId);
 
 // POST /contratos
-router.post("/contratos", contratosController.criar);
+router.post("/contratos", requireJWTAuth, requirePermissao("CRIAR_CONTRATO"), contratosController.criar);
 
 // PUT /contratos/:id
-router.put("/contratos/:id", contratosController.atualizar);
+router.put("/contratos/:id", requireJWTAuth, requirePermissao("EDITAR_CONTRATO"), contratosController.atualizar);
 
 // DELETE /contratos/:id
-router.delete("/contratos/:id", contratosController.deletar);
+router.delete("/contratos/:id", requireJWTAuth, requirePermissao("DELETAR_CONTRATO"), contratosController.deletar);
 
 module.exports = router;
