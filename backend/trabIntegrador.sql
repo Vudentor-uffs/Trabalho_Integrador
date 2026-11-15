@@ -1,11 +1,11 @@
--- DROP TABLE IF EXISTS usuario_permissao;
--- DROP TABLE IF EXISTS permissao;
--- DROP TABLE IF EXISTS usuario;
--- DROP TABLE IF EXISTS empresa;
--- DROP TABLE IF EXISTS cliente_pj;
--- DROP TABLE IF EXISTS cliente_pf;
--- DROP TABLE IF EXISTS contratos;
--- DROP TYPE  IF EXISTS tipo_cliente;
+DROP TABLE IF EXISTS usuario_permissao CASCADE;
+DROP TABLE IF EXISTS permissao CASCADE;
+DROP TABLE IF EXISTS usuario CASCADE;
+DROP TABLE IF EXISTS contratos CASCADE;
+DROP TABLE IF EXISTS clientes_pf CASCADE;
+DROP TABLE IF EXISTS clientes_pj CASCADE;
+DROP TABLE IF EXISTS empresa CASCADE;
+DROP TYPE  IF EXISTS tipo_cliente CASCADE;
 
 
 CREATE TYPE tipo_cliente AS ENUM ('Normal', 'Colaborador');
@@ -13,14 +13,14 @@ CREATE TYPE tipo_cliente AS ENUM ('Normal', 'Colaborador');
 
 CREATE TABLE empresa (
     cnpj            VARCHAR(14) PRIMARY KEY DEFAULT '52693615000144',
-    nome            VARCHAR(100) UNIQUE DEFAULT 'Vanessa Reolon Consultoria & Desenvolvimento Ldta.',
+    nome            VARCHAR(100) UNIQUE NOT NULL DEFAULT 'Vanessa Reolon Consultoria & Desenvolvimento Ldta.',
     endereco        VARCHAR(150) DEFAULT 'Rua Santo Antonio, 740, Chapecó-SC',
-    email           VARCHAR(255) DEFAULT 'vanessareolon.vr@gmail.com',
+    email           VARCHAR(255) NOT NULL DEFAULT 'vanessareolon.vr@gmail.com',
     telefone        VARCHAR(20) DEFAULT '4999180473',
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
+INSERT INTO empresa DEFAULT VALUES;
 
 CREATE TABLE clientes_pj ( 
     id              SERIAL PRIMARY KEY,
@@ -101,7 +101,7 @@ VALUES
     ('11222333000155', 'Tech Solutions LTDA', 'contato@techsolutions.com', '4933221100', 'Rua Fernando Machado, 500'),
     ('44555666000188', 'Supermercado Chapecó SA', 'financeiro@superchapeco.com.br', '4933554411', 'Av. São Pedro, 1200');
 
-INSERT INTO clientes_pf (cpf, nome, email, tipo, telefone, data_nascimento) 
+INSERT INTO clientes_pf (cpf, nome, email, tipo, telefone, data_nascimento, cliente_pj_id) 
 VALUES 
     ('12345678901', 'João da Silva', 'joao.silva@email.com', 'Normal', '49991112222', '1990-05-15', NULL),
     ('98765432100', 'Maria Oliveira', 'maria.oliveira@email.com', 'Colaborador', '49998887777', '1995-08-20', 1),

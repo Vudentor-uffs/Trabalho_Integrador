@@ -1,21 +1,17 @@
 const { Empresa } = require("../database/models");
 
-async function listar() {
-    return Empresa.findAll({ order: [["nome", "ASC"]] });
+const cnpj = "52693615000144";
+async function buscar() {
+    return Empresa.findByPk(cnpj);
 }
 
-async function buscarPorId(id) {
-    return Empresa.findByPk(id);
-}
-
-async function atualizar(id, dados) {
-    const empresa = await Empresa.findByPk(id);
+async function atualizar(dados) {
+    const empresa = await Empresa.findByPk(cnpj);
     if (!empresa) return null;
     return empresa.update(dados);
 }
 
 module.exports = {
-    listar,
-    buscarPorId,
+    buscar,
     atualizar,
 };
