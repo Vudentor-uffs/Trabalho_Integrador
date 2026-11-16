@@ -1,7 +1,38 @@
-const { ClientePj } = require("../database/models");
+const { Op } = require("sequelize");
+const { ClientePj, ClientePf, Contrato } = require("../database/models");
 
-async function listar() {
-    return ClientePj.findAll({ order: [["id", "ASC"]] });
+async function listar({ busca, comContratos, ordenarPor = "id", ordem = "ASC" } = {}) {
+    const where = {};
+
+    // Filtragem textual (busca por nome/CNPJ/e-mail)
+    if (busca) {
+        const apenasNumeros = String(busca).replace(/\D/g, "");
+        where[Op.or] = [
+            { nome: { [Op.iLike]: `%${busca}%` } },
+            { email: { [Op.iLike]: `%${busca}%` } },
+            ...(apenasNumeros ? [{ cnpj: { [Op.like]: `%${apenasNumeros}%` } }] : []),
+        ];
+    }
+
+    // Ordenação 
+    const camposPermitidos = ["id", "nome", "cnpj", "email"];
+    const colunaOrdenacao = camposPermitidos.includes(ordenarPor) ? ordenarPor : "nome";
+    const direcaoOrdenacao = String(ordem).toUpperCase() === "DESC" ? "DESC" : "ASC";
+
+    // Filtragem por categoria (empresas com contratos ativos/cadastrados)
+    const include = [
+        { model: ClientePf, as: "colaboradores" },
+        {
+            model: Contrato,
+            as: "contratos",
+            required: comContratos === "true", // INNER JOIN se true, LEFT JOIN caso contrário
+        },
+    ];
+
+    return ClientePj.findAll({
+        where,
+        order: [[colunaOrdenacao, direcaoOrdenacao]], include
+    });
 }
 
 async function buscarPorId(id) {

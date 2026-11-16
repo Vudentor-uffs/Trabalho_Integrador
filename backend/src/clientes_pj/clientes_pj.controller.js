@@ -2,7 +2,7 @@ const clientes_pjService = require("./clientes_pj.service");
 
 async function listar(req, res) {
     try {
-        const clientes_pj = await clientes_pjService.listar();
+        const clientes_pj = await clientes_pjService.listar(req.query);
         return res.status(200).json(clientes_pj);
     } catch (erro) {
         console.log("Erro ao buscar clientes:", erro);
@@ -13,6 +13,7 @@ async function listar(req, res) {
 async function buscarPorId(req, res) {
     try {
         const cliente_pj = await clientes_pjService.buscarPorId(req.params.id);
+        if (!cliente_pj) return res.status(404).json({ erro: "Cliente não encontrado." });
         return res.status(200).json(cliente_pj);
     } catch (erro) {
         console.log("Erro ao buscar cliente:", erro);
@@ -26,6 +27,9 @@ async function criar(req, res) {
         return res.status(201).json(cliente_pj);
     } catch (erro) {
         console.log("Erro ao criar cliente:", erro);
+        if (erro.name === "SequelizeUniqueConstraintError") {
+            return res.status(409).json({ erro: "CNPJ já cadastrado." });
+        }
         return res.status(500).json({ erro: erro.message });
     }
 }
@@ -37,6 +41,9 @@ async function atualizar(req, res) {
         return res.status(200).json(cliente_pj);
     } catch (erro) {
         console.log("Erro ao atualizar cliente:", erro);
+        if (erro.name === "SequelizeUniqueConstraintError") {
+            return res.status(409).json({ erro: "CNPJ já cadastrado." });
+        }
         return res.status(500).json({ erro: erro.message });
     }
 }

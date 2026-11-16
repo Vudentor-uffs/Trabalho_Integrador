@@ -1,7 +1,33 @@
+const { Op } = require("sequelize");
 const { Contrato } = require("../database/models");
 
-async function listar() {
-    return Contrato.findAll({ order: [["id", "ASC"]] });
+async function listar({tipoCliente, dataInicioMin, dataFimMax, ordenarPor = "id", ordem = "ASC" } = {}) {
+    const where = {};
+
+    // Filtragem por categoria (PF/PJ)
+    if (tipoCliente === "PF") {
+        where.clientePfId = { [Op.ne]: null };
+    } else if (tipoCliente === "PJ") {
+        where.clientePjId = { [Op.ne]: null };
+    }
+
+    // Filtragem por datas
+    if (dataInicioMin) {
+        where.dataInicio = { [Op.gte]: dataInicioMin };
+    }
+    if (dataFimMax) {
+        where.dataFim = { [Op.lte]: dataFimMax };
+    }
+
+    // Ordenação 
+    const camposPermitidos = ["id", "valor", "dataInicio", "dataFim", "validade"];
+    const colunaOrdenacao = camposPermitidos.includes(ordenarPor) ? ordenarPor : "id";
+    const direcaoOrdenacao = String(ordem).toUpperCase() === "DESC" ? "DESC" : "ASC";
+
+    return Contrato.findAll({
+        where,
+        order: [[colunaOrdenacao, direcaoOrdenacao]],
+    });
 }
 
 async function buscarPorId(id) {

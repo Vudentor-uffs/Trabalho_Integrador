@@ -1,7 +1,7 @@
 const contratosRepository = require("./contratos.repository");
 
-async function listar() {
-    return contratosRepository.listar();
+async function listar(filtros) {
+    return contratosRepository.listar(filtros);
 }
 
 async function buscarPorId(id) {

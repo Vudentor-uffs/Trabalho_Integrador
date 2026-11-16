@@ -2,7 +2,7 @@ const contratosService = require("./contratos.service");
 
 async function listar(req, res) {
     try {
-        const contratos = await contratosService.listar();
+        const contratos = await contratosService.listar(req.query);
         return res.status(200).json(contratos);
     } catch (erro) {
         console.log("Erro ao buscar contratos:", erro);
