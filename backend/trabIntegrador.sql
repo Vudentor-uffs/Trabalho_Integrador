@@ -44,7 +44,7 @@ CREATE TABLE clientes_pf (
     data_nascimento DATE NOT NULL,
     cliente_pj_id   INTEGER REFERENCES clientes_pj(id) ON DELETE SET NULL,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
     CONSTRAINT chk_tipo_colaborador_pj CHECK (
         (tipo = 'Colaborador' AND cliente_pj_id IS NOT NULL) OR
@@ -71,7 +71,6 @@ CREATE TABLE contratos (
         (cliente_pj_id IS NOT NULL AND cliente_pf_id IS NULL)
     )
 );
-
 
 CREATE TABLE usuario (
     email       VARCHAR(255) PRIMARY KEY,
@@ -151,12 +150,10 @@ INSERT INTO permissao (descricao) VALUES
 -- Hash gerado com bcrypt.hashSync("senha123", 10)
 -- OBS: Em produção, os usuários seriam criados via API com senhas individuais
 INSERT INTO usuario (email, nome, senha) VALUES
-    ('vanessareolon.vr@gmail.com', 'Administrador', '$2b$10$rYwHqLqN4XqXO2KzH7W5YO5XO2KzH7W5YO5XO2KzH7W5YO5XO2KzHe'),
-    ('cliente@cliente.com', 'Cliente', '$2b$10$rYwHqLqN4XqXO2KzH7W5YO5XO2KzH7W5YO5XO2KzH7W5YO5XO2KzHe');
+    ('vanessareolon.vr@gmail.com', 'Administrador', '$2b$10$FQzaUnNsSEGIHJnSLBGoaOihzYdFdMm692uR6WSStIwMPUeMtQ9UK'),
+    ('cliente@cliente.com', 'Cliente', '$2b$10$FQzaUnNsSEGIHJnSLBGoaOihzYdFdMm692uR6WSStIwMPUeMtQ9UK');
 
 -- Associar permissões aos usuários
 -- Admin tem todas as permissões
 INSERT INTO usuario_permissao (email, id_permissao)
 SELECT 'vanessareolon.vr@gmail.com', id FROM permissao;
-
-

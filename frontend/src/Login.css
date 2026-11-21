@@ -1,0 +1,183 @@
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  max-width: none;
+  min-height: 0;
+  height: 100%;
+  border: 0;
+  display: block;
+  text-align: left;
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+  background: #d7dfe4;
+}
+
+.login-page,
+.login-page * {
+  box-sizing: border-box;
+}
+
+.login-page {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: #080808;
+  background: #d7dfe4;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 100%;
+  padding: 32px;
+  overflow: auto;
+  background: #dce3e7;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 32px;
+  border-radius: 20px !important;
+}
+
+.login-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.login-title {
+  margin: 0 !important;
+  color: #080808;
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+}
+
+.login-brand img {
+  display: block;
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-submit.MuiButton-root {
+  min-height: 48px;
+  background: #123b5d;
+  color: #fff;
+}
+
+.login-submit.MuiButton-root:hover {
+  background: #0c2e49;
+}
+
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.login-forgot-password.MuiButton-root {
+  text-transform: none;
+}
+
+.login-google.MuiButton-root {
+  width: 100%;
+  min-height: 48px;
+  border-color: #c7cdd2;
+  color: #202124;
+  text-transform: none;
+}
+
+.login-google.MuiButton-root:hover {
+  border-color: #8c969e;
+  background: #f7f8f9;
+}
+
+.login-google-mark {
+  margin-right: 10px;
+  color: #4285f4;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.login-message {
+  margin-top: 4px;
+}
+
+.login-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  height: 100%;
+  overflow: hidden;
+  background: #e8ebed;
+}
+
+.login-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 760px) {
+  .login-content {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .login-card {
+    padding: 24px;
+  }
+
+  .login-visual {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .login-content {
+    padding: 12px;
+  }
+
+  .login-card {
+    padding: 20px;
+  }
+
+  .login-brand img {
+    width: 72px;
+    height: 72px;
+  }
+}

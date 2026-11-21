@@ -42,6 +42,13 @@ async function logout(req, res) {
     }
 }
 
+function obterSessao(req, res) {
+    return res.status(200).json({
+        email: req.user.email,
+        nome: req.user.nome,
+    });
+}
+
 async function criarUsuario(req, res) {
     try {
 
@@ -60,5 +67,6 @@ async function criarUsuario(req, res) {
 module.exports = {
     login,
     logout,
+    obterSessao,
     criarUsuario,
 };

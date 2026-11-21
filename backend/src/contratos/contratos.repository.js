@@ -1,5 +1,10 @@
 const { Op } = require("sequelize");
-const { Contrato } = require("../database/models");
+const { Contrato, ClientePf, ClientePj } = require("../database/models");
+
+const incluirCliente = [
+    { model: ClientePf, as: "clientePf", attributes: ["id", "nome"] },
+    { model: ClientePj, as: "clientePj", attributes: ["id", "nome"] },
+];
 
 async function listar({tipoCliente, dataInicioMin, dataFimMax, ordenarPor = "id", ordem = "ASC" } = {}) {
     const where = {};
@@ -26,12 +31,13 @@ async function listar({tipoCliente, dataInicioMin, dataFimMax, ordenarPor = "id"
 
     return Contrato.findAll({
         where,
+        include: incluirCliente,
         order: [[colunaOrdenacao, direcaoOrdenacao]],
     });
 }
 
 async function buscarPorId(id) {
-    return Contrato.findByPk(id);
+    return Contrato.findByPk(id, { include: incluirCliente });
 }
 
 async function criar(dados) {

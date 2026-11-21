@@ -1,122 +1,128 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Alert, Box, Button, CircularProgress, CssBaseline, ThemeProvider } from "@mui/material";
+import PainelPrincipal from "./PainelPrincipal.jsx";
+import Login from "./Login.jsx";
+import tema from "./tema.js";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [emailUsuario, setEmailUsuario] = useState("");
+    const [verificandoSessao, setVerificandoSessao] = useState(true);
+    const [erroSessao, setErroSessao] = useState("");
+    const [tentativaSessao, setTentativaSessao] = useState(0);
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    function aoEntrar(email) {
+        setEmailUsuario(email);
+    }
 
-      <div className="ticks"></div>
+    useEffect(() => {
+        let ativo = true;
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        async function restaurarSessao() {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    if (ativo) setEmailUsuario("");
+                    return;
+                }
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+                const resposta = await axios.get("http://localhost:3000/me", {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                if (typeof resposta.data.email !== "string" || !resposta.data.email) {
+                    throw new Error("O backend retornou dados inválidos para a sessão.");
+                }
+                if (ativo) {
+                    setEmailUsuario(resposta.data.email);
+                    setErroSessao("");
+                }
+            } catch (erro) {
+                if (erro.response?.status === 401 || erro.response?.status === 403) {
+                    try {
+                        localStorage.removeItem("token");
+                    } catch (erroArmazenamento) {
+                        console.error("Não foi possível remover o token inválido:", erroArmazenamento);
+                    }
+                    if (ativo) setEmailUsuario("");
+                } else {
+                    console.error("Não foi possível restaurar a sessão:", erro);
+                    if (ativo) {
+                        setErroSessao(
+                            "Não foi possível verificar sua sessão. Confira se o backend está ativo e tente novamente.",
+                        );
+                    }
+                }
+            } finally {
+                if (ativo) setVerificandoSessao(false);
+            }
+        }
+
+        restaurarSessao();
+        return () => {
+            ativo = false;
+        };
+    }, [tentativaSessao]);
+
+    function sair() {
+        try {
+            localStorage.removeItem("token");
+        } catch (erro) {
+            console.error("Não foi possível remover o token salvo:", erro);
+        }
+        setEmailUsuario("");
+    }
+
+    return (
+        <ThemeProvider theme={tema}>
+            <CssBaseline />
+            <div className="App">
+                {verificandoSessao ? (
+                    <Box
+                        role="status"
+                        sx={{
+                            display: "flex",
+                            minHeight: "100%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <CircularProgress aria-label="Verificando sessão" />
+                    </Box>
+                ) : erroSessao ? (
+                    <Box
+                        sx={{
+                            display: "flex",
+                            minHeight: "100%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: 3,
+                        }}
+                    >
+                        <Alert
+                            severity="error"
+                            action={
+                                <Button
+                                    color="inherit"
+                                    onClick={() => {
+                                        setVerificandoSessao(true);
+                                        setTentativaSessao((atual) => atual + 1);
+                                    }}
+                                >
+                                    Tentar novamente
+                                </Button>
+                            }
+                        >
+                            {erroSessao}
+                        </Alert>
+                    </Box>
+                ) : emailUsuario ? (
+                    <PainelPrincipal emailUsuario={emailUsuario} aoSair={sair} />
+                ) : (
+                    <Login aoEntrar={aoEntrar} />
+                )}
+            </div>
+        </ThemeProvider>
+    );
 }
 
-export default App
+export default App;

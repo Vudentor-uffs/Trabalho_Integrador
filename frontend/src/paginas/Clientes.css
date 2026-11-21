@@ -1,0 +1,78 @@
+.conteudo-clientes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cabecalho-clientes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cartao-lista-clientes {
+  background: #f5f5f5 !important;
+}
+
+.abas-clientes {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.filtros-clientes {
+  margin-bottom: 20px;
+}
+
+.filtro-tipo-cliente,
+.ordenacao-clientes {
+  width: 190px;
+  flex-shrink: 0;
+}
+
+.tabela-clientes {
+  overflow-x: auto;
+}
+
+.estado-clientes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.formulario-cliente.MuiDialogContent-root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 12px;
+}
+
+.campos-cliente {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.campos-cliente > * {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+@media (max-width: 650px) {
+  .cabecalho-clientes {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filtros-clientes {
+    flex-direction: column;
+  }
+
+  .filtro-tipo-cliente,
+  .ordenacao-clientes {
+    width: 100%;
+  }
+}
