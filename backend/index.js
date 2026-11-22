@@ -5,6 +5,7 @@ const empresaRoutes = require("./src/empresa/empresa.routes");
 const clientes_pfRoutes = require("./src/clientes_pf/clientes_pf.routes");
 const clientes_pjRoutes = require("./src/clientes_pj/clientes_pj.routes");
 const contratosRoutes = require("./src/contratos/contratos.routes");
+const dashboardRoutes = require("./src/dashboard/dashboard.routes");
 const authRoutes = require("./src/auth/auth.routes");
 const authConfig = require("./src/auth/auth.config");
 
@@ -23,6 +24,7 @@ app.use(empresaRoutes);
 app.use(clientes_pfRoutes);
 app.use(clientes_pjRoutes);
 app.use(contratosRoutes);
+app.use(dashboardRoutes);
 app.use(authRoutes);
 
 app.listen(PORT, () => {
