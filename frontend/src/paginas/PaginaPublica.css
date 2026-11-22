@@ -1,0 +1,423 @@
+.pagina-publica,
+.pagina-publica * {
+    box-sizing: border-box;
+}
+
+.pagina-publica {
+    min-height: 100%;
+    background: #fff;
+    color: #172b3b;
+}
+
+.cabecalho-publico {
+    display: flex;
+    min-height: 84px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 12px 7%;
+    border-bottom: 1px solid #e6ecef;
+}
+
+.marca-publica {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #092247;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.marca-publica img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+}
+
+.navegacao-publica {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.navegacao-publica a {
+    color: #425260;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.navegacao-publica a:hover {
+    color: #009da5;
+}
+
+.botao-login-publico.MuiButton-root,
+.acoes-usuario-publico .MuiButton-root {
+    border-color: #009da5;
+    color: #087f86;
+    white-space: nowrap;
+}
+
+.acoes-usuario-publico {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.boas-vindas-publico.MuiTypography-root {
+    max-width: 220px;
+    overflow: hidden;
+    color: #425260;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.destaque-publico {
+    display: flex;
+    min-height: 490px;
+    align-items: stretch;
+    padding: 48px 7%;
+    background: #f3f8f9;
+}
+
+.conteudo-destaque-publico {
+    display: flex;
+    width: 52%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 6% 40px 0;
+}
+
+.etiqueta-publica.MuiTypography-root {
+    margin-bottom: 16px;
+    color: #087f86;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+}
+
+.titulo-destaque-publico.MuiTypography-root {
+    max-width: 620px;
+    margin-bottom: 20px;
+    color: #092247;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.12;
+}
+
+.descricao-destaque-publico.MuiTypography-root {
+    max-width: 550px;
+    margin-bottom: 28px;
+    color: #526371;
+    font-size: 18px;
+    line-height: 1.65;
+}
+
+.botao-contato-destaque.MuiButton-root,
+.opcoes-contato-publicas .MuiButton-contained {
+    min-height: 48px;
+    padding: 10px 24px;
+    background: #009da5;
+}
+
+.imagem-destaque-publico {
+    position: relative;
+    display: flex;
+    width: 48%;
+    height: 390px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #263039;
+}
+
+.imagem-destaque-publico > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.fundo-imagem-destaque {
+    object-fit: cover;
+    filter: blur(18px) brightness(0.65);
+    transform: scale(1.08);
+}
+
+.imagem-destaque-publico > .foto-destaque-publico {
+    z-index: 1;
+    object-fit: contain;
+    object-position: center;
+}
+
+.controles-carrossel {
+    position: absolute;
+    z-index: 2;
+    right: 16px;
+    bottom: 14px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.controles-carrossel .MuiIconButton-root {
+    width: 38px;
+    height: 38px;
+    color: #092247;
+}
+
+.controles-carrossel .MuiSvgIcon-root {
+    font-size: 16px;
+}
+
+.pontos-carrossel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ponto-carrossel {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #aab8bf;
+    cursor: pointer;
+}
+
+.ponto-carrossel.ativo {
+    width: 22px;
+    border-radius: 6px;
+    background: #009da5;
+}
+
+.secao-servicos-publica {
+    padding: 76px 7% 84px;
+}
+
+.titulo-secao-publica {
+    max-width: 640px;
+    margin: 0 auto 36px;
+    text-align: center;
+}
+
+.titulo-secao-publica .etiqueta-publica.MuiTypography-root,
+.secao-contato-publica .etiqueta-publica.MuiTypography-root {
+    margin-bottom: 10px;
+}
+
+.titulo-secao-publica h2,
+.secao-contato-publica h2 {
+    margin-bottom: 12px;
+    color: #092247;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.titulo-secao-publica > .MuiTypography-root:last-child,
+.secao-contato-publica > div:first-child > .MuiTypography-root:last-child {
+    color: #61717c;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.cartoes-servicos-publicos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.cartao-servico-publico {
+    flex: 1 1 250px;
+    max-width: 360px;
+    padding: 28px;
+    border: 1px solid #e5ecee;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.icone-servico-publico.MuiAvatar-root {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    background: #e2f5f4;
+    color: #087f86;
+}
+
+.cartao-servico-publico h3 {
+    margin-bottom: 10px;
+    color: #092247;
+    font-size: 20px;
+}
+
+.cartao-servico-publico > .MuiTypography-root:last-child {
+    color: #61717c;
+    line-height: 1.6;
+}
+
+.secao-contato-publica {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 56px 7%;
+    background: #f3f8f9;
+}
+
+.secao-contato-publica > div:first-child {
+    max-width: 570px;
+}
+
+.opcoes-contato-publicas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.opcoes-contato-publicas .MuiButton-outlined {
+    min-height: 48px;
+    border-color: #009da5;
+    color: #087f86;
+}
+
+.opcoes-contato-publicas .MuiButton-text {
+    color: #425260;
+}
+
+.rodape-publico {
+    display: flex;
+    min-height: 70px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 7%;
+    color: #687780;
+    font-size: 14px;
+}
+
+@media (max-width: 800px) {
+    .cabecalho-publico {
+        flex-wrap: wrap;
+        padding: 12px 5%;
+    }
+
+    .navegacao-publica {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 24px;
+        padding: 8px 0 2px;
+    }
+
+    .destaque-publico {
+        min-height: 0;
+        flex-direction: column;
+        gap: 20px;
+        padding: 40px 5%;
+    }
+
+    .conteudo-destaque-publico,
+    .imagem-destaque-publico {
+        width: 100%;
+    }
+
+    .conteudo-destaque-publico {
+        padding: 10px 0;
+    }
+
+    .imagem-destaque-publico {
+        width: 100%;
+        height: 360px;
+        align-self: center;
+    }
+
+    .secao-servicos-publica {
+        padding: 56px 5%;
+    }
+
+    .secao-contato-publica {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 44px 5%;
+    }
+
+    .opcoes-contato-publicas {
+        justify-content: flex-start;
+    }
+
+    .rodape-publico {
+        padding: 16px 5%;
+    }
+}
+
+@media (max-width: 520px) {
+    .cabecalho-publico {
+        gap: 10px;
+    }
+
+    .marca-publica {
+        font-size: 14px;
+    }
+
+    .marca-publica img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .botao-login-publico.MuiButton-root,
+    .acoes-usuario-publico .MuiButton-root {
+        min-width: 0;
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .boas-vindas-publico.MuiTypography-root {
+        max-width: 100px;
+        font-size: 12px;
+    }
+
+    .navegacao-publica {
+        gap: 18px;
+    }
+
+    .navegacao-publica a {
+        font-size: 13px;
+    }
+
+    .titulo-destaque-publico.MuiTypography-root {
+        font-size: 36px;
+    }
+
+    .descricao-destaque-publico.MuiTypography-root {
+        font-size: 16px;
+    }
+
+    .titulo-secao-publica h2,
+    .secao-contato-publica h2 {
+        font-size: 27px;
+    }
+
+    .rodape-publico {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+    }
+}

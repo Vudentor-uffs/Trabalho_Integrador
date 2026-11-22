@@ -11,14 +11,18 @@ async function login(req, res) {
             return res.status(401).json({ erro: resultado.mensagem });
         }
 
+        const administrador = await usuarioEhAdministrador(username);
         const token = jwt.sign(
-        { username: username },
-        "your-secret-key",
-        { expiresIn: "1h" });
+            { username: username },
+            "your-secret-key",
+            { expiresIn: "1h" },
+        );
 
         return res.status(200).json({
             message: "Login successful",
-            token: token
+            token,
+            administrador,
+            nome: resultado.usuario.nome,
         });
 
     } catch (erro) {
@@ -42,11 +46,22 @@ async function logout(req, res) {
     }
 }
 
-function obterSessao(req, res) {
-    return res.status(200).json({
-        email: req.user.email,
-        nome: req.user.nome,
-    });
+async function usuarioEhAdministrador(email) {
+    const permissoes = await authService.obterPermissoesUsuario(email);
+    return permissoes.some((permissao) => permissao.descricao === "ADMIN");
+}
+
+async function obterSessao(req, res) {
+    try {
+        return res.status(200).json({
+            email: req.user.email,
+            nome: req.user.nome,
+            administrador: await usuarioEhAdministrador(req.user.email),
+        });
+    } catch (erro) {
+        console.error("Erro ao consultar o perfil do usuário:", erro);
+        return res.status(500).json({ erro: "Não foi possível consultar o perfil do usuário." });
+    }
 }
 
 async function criarUsuario(req, res) {

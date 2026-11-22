@@ -5,7 +5,7 @@ import logoSistema from "./assets/logoSistema.png";
 import loginPortrait from "./assets/login-portrait.jpeg";
 import "./Login.css";
 
-export default function Login({ aoEntrar }) {
+export default function Login({ aoEntrar, aoVoltar }) {
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
     const [textoMensagem, setTextoMensagem] = useState("");
@@ -20,7 +20,11 @@ export default function Login({ aoEntrar }) {
             });
             if (resposta.status >= 200 && resposta.status < 300) {
                 localStorage.setItem("token", resposta.data.token);
-                aoEntrar(usuario.trim());
+                aoEntrar({
+                    email: usuario.trim(),
+                    administrador: resposta.data.administrador === true,
+                    nome: resposta.data.nome,
+                });
             } else {
                 console.error("Falha na autenticação");
             }
@@ -45,6 +49,14 @@ export default function Login({ aoEntrar }) {
         <Box component="main" className="login-page">
             <Box className="login-content">
                 <Paper className="login-card" elevation={3}>
+                    <Button
+                        className="login-voltar"
+                        variant="text"
+                        type="button"
+                        onClick={aoVoltar}
+                    >
+                        Voltar ao site
+                    </Button>
                     <Box component="header" className="login-card-header">
                         <Typography component="h1" variant="h4" className="login-title">
                             Login

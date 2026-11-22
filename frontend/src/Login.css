@@ -58,6 +58,11 @@ body,
   border-radius: 20px !important;
 }
 
+.login-voltar.MuiButton-root {
+  margin: -12px 0 16px -8px;
+  text-transform: none;
+}
+
 .login-card-header {
   display: flex;
   align-items: center;

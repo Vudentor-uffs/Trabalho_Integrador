@@ -5,10 +5,10 @@ const { requireJWTAuth, requirePermissao } = require("../auth/auth.config");
 const router = express.Router();
 
 // GET /clientes_pj
-router.get("/clientes_pj", clientes_pjController.listar);
+router.get("/clientes_pj", requirePermissao("ADMIN"), clientes_pjController.listar);
 
 // GET /clientes_pj/:id
-router.get("/clientes_pj/:id", clientes_pjController.buscarPorId);
+router.get("/clientes_pj/:id", requirePermissao("ADMIN"), clientes_pjController.buscarPorId);
 
 // POST /clientes_pj
 router.post("/clientes_pj", requireJWTAuth, requirePermissao("CRIAR_CLIENTE_PJ"),clientes_pjController.criar);

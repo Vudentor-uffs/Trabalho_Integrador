@@ -18,9 +18,15 @@ function mensagemDoErro(erro, mensagemPadrao) {
 export async function carregarDadosContratos() {
     const [respostaContratos, respostaPessoaFisica, respostaPessoaJuridica] =
         await Promise.all([
-            axios.get(`${enderecoApi}/contratos`),
-            axios.get(`${enderecoApi}/clientes_pf`),
-            axios.get(`${enderecoApi}/clientes_pj`),
+            axios.get(`${enderecoApi}/contratos`, {
+                headers: cabecalhosAutenticados(),
+            }),
+            axios.get(`${enderecoApi}/clientes_pf`, {
+                headers: cabecalhosAutenticados(),
+            }),
+            axios.get(`${enderecoApi}/clientes_pj`, {
+                headers: cabecalhosAutenticados(),
+            }),
         ]);
 
     return {

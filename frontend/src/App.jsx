@@ -3,16 +3,23 @@ import axios from "axios";
 import { Alert, Box, Button, CircularProgress, CssBaseline, ThemeProvider } from "@mui/material";
 import PainelPrincipal from "./PainelPrincipal.jsx";
 import Login from "./Login.jsx";
+import PaginaPublica from "./paginas/PaginaPublica.jsx";
 import tema from "./tema.js";
 
 function App() {
     const [emailUsuario, setEmailUsuario] = useState("");
+    const [nomeUsuario, setNomeUsuario] = useState("");
+    const [administrador, setAdministrador] = useState(false);
+    const [telaAcesso, setTelaAcesso] = useState("publico");
     const [verificandoSessao, setVerificandoSessao] = useState(true);
     const [erroSessao, setErroSessao] = useState("");
     const [tentativaSessao, setTentativaSessao] = useState(0);
 
-    function aoEntrar(email) {
-        setEmailUsuario(email);
+    function aoEntrar(sessao) {
+        setEmailUsuario(sessao.email);
+        setNomeUsuario(sessao.nome);
+        setAdministrador(sessao.administrador);
+        setTelaAcesso("publico");
     }
 
     useEffect(() => {
@@ -22,7 +29,11 @@ function App() {
             try {
                 const token = localStorage.getItem("token");
                 if (!token) {
-                    if (ativo) setEmailUsuario("");
+                    if (ativo) {
+                        setEmailUsuario("");
+                        setNomeUsuario("");
+                        setAdministrador(false);
+                    }
                     return;
                 }
 
@@ -32,8 +43,13 @@ function App() {
                 if (typeof resposta.data.email !== "string" || !resposta.data.email) {
                     throw new Error("O backend retornou dados inválidos para a sessão.");
                 }
+                if (typeof resposta.data.nome !== "string" || !resposta.data.nome) {
+                    throw new Error("O backend retornou um nome inválido para a sessão.");
+                }
                 if (ativo) {
                     setEmailUsuario(resposta.data.email);
+                    setNomeUsuario(resposta.data.nome);
+                    setAdministrador(resposta.data.administrador === true);
                     setErroSessao("");
                 }
             } catch (erro) {
@@ -43,7 +59,11 @@ function App() {
                     } catch (erroArmazenamento) {
                         console.error("Não foi possível remover o token inválido:", erroArmazenamento);
                     }
-                    if (ativo) setEmailUsuario("");
+                    if (ativo) {
+                        setEmailUsuario("");
+                        setNomeUsuario("");
+                        setAdministrador(false);
+                    }
                 } else {
                     console.error("Não foi possível restaurar a sessão:", erro);
                     if (ativo) {
@@ -70,6 +90,9 @@ function App() {
             console.error("Não foi possível remover o token salvo:", erro);
         }
         setEmailUsuario("");
+        setNomeUsuario("");
+        setAdministrador(false);
+        setTelaAcesso("publico");
     }
 
     return (
@@ -115,10 +138,20 @@ function App() {
                             {erroSessao}
                         </Alert>
                     </Box>
-                ) : emailUsuario ? (
+                ) : emailUsuario && administrador ? (
                     <PainelPrincipal emailUsuario={emailUsuario} aoSair={sair} />
+                ) : telaAcesso === "login" ? (
+                    <Login
+                        aoEntrar={aoEntrar}
+                        aoVoltar={() => setTelaAcesso("publico")}
+                    />
                 ) : (
-                    <Login aoEntrar={aoEntrar} />
+                    <PaginaPublica
+                        emailUsuario={emailUsuario}
+                        nomeUsuario={nomeUsuario}
+                        aoAbrirLogin={() => setTelaAcesso("login")}
+                        aoSair={sair}
+                    />
                 )}
             </div>
         </ThemeProvider>

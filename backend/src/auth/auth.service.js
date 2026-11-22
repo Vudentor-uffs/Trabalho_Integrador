@@ -60,12 +60,7 @@ async function verificarPermissaoPorDescricao(email, descricaoPermissao) {
 }
 
 async function obterPermissoesUsuario(email) {
-    try {
-        return await authRepository.listarPermissoesUsuario(email);
-    } catch (erro) {
-        console.error("Erro ao obter permissões do usuário:", erro);
-        return [];
-    }
+    return authRepository.listarPermissoesUsuario(email);
 }
 
 module.exports = {
